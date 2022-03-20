@@ -13,7 +13,6 @@ class Product extends Model
     protected $fillable = [
         'name',
         'description',
-        'image',
         'quantity',
         'price',
     ];
@@ -28,8 +27,8 @@ class Product extends Model
     }
 
 
-    public function image()
+    public function images()
     {
-        return $this->morphOne(Image::class, 'imageable');
+        return $this->morphMany(Image::class, 'imageable');
     }
 }

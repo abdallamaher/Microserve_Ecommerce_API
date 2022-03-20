@@ -19,7 +19,6 @@ class RegisterController extends Controller
             'imageable_type' => User::class,
             'imageable_id' =>  $user->id,
         ]);
-
         $user->assignRole('user');
 
         $token = $user->createToken('myapptoken')->plainTextToken;
