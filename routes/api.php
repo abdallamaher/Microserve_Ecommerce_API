@@ -14,6 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', function () {
+    $seller = \App\Models\Seller::with('products')->find(1);
+    return response()->json([
+        'data'=>$seller
+    ], 200);
+});
 
 Route::prefix('user')->middleware(['auth:sanctum', 'role:user'])->group(function () {
     foreach (File::allFiles(base_path('routes/api/user')) as $file) {

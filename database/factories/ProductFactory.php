@@ -15,6 +15,7 @@ class ProductFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
+            'seller_id' => 1,
             'description' => $this->faker->paragraph(),
             'quantity' => 10,
             'price' => 20.55,

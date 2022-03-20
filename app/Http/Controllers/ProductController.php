@@ -6,13 +6,14 @@ use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return ProductResource
      */
     public function index()
     {
@@ -25,11 +26,13 @@ class ProductController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\StoreProductRequest  $request
-     * @return \Illuminate\Http\Response
+     * @return ProductResource
      */
     public function store(StoreProductRequest $request)
     {
-        $product = Product::create($request->all());
+        $product = $request->all();
+        $product['seller_id'] = Auth::id();
+        $product = Product::create($product);
         return new ProductResource($product);
     }
 
@@ -62,7 +65,7 @@ class ProductController extends Controller
      *
      * @param  \App\Http\Requests\UpdateProductRequest  $request
      * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | ProductResource
      */
     public function update(UpdateProductRequest $request, $id)
     {

@@ -12,6 +12,7 @@ class Product extends Model
 
     protected $fillable = [
         'name',
+        'seller_id',
         'description',
         'quantity',
         'price',
@@ -30,5 +31,10 @@ class Product extends Model
     public function images()
     {
         return $this->morphMany(Image::class, 'imageable');
+    }
+
+    public function seller()
+    {
+        return $this->belongsTo(User::Class, 'seller_id');
     }
 }
