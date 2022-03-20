@@ -69,7 +69,8 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, $id)
     {
-        $product = Product::find($id);
+        $seller_id = Auth::id();
+        $product = Product::where('seller_id', $seller_id)->where('id', $id)->first();
         if($product === null)
         {
             return response([
@@ -89,7 +90,8 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $product = Product::find($id);
+        $seller_id = Auth::id();
+        $product = Product::where('seller_id', $seller_id)->where('id', $id)->first();
         if($product === null ){
             return response([
                 'message' => trans('data.null_entity'),
