@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use App\Models\Image;
 
 class User extends Authenticatable
 {
@@ -32,6 +33,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'admin_comment',
+        'email_verified_at',
+        'deleted_at',
     ];
 
     /**
@@ -45,8 +49,13 @@ class User extends Authenticatable
 
     protected $guard_name = 'api';
 
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
+    }
+
     public function image()
     {
-        return $this->morphOne(image::class, 'imageable');
+        return $this->morphOne(Image::class, 'imageable');
     }
 }
