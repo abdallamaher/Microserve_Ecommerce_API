@@ -16,7 +16,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = Product::orderBy('created_at','desc')->paginate(10);
+        return new ProductResource($products);
     }
 
 
@@ -28,14 +29,15 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        //
+        $product = Product::create($request->all());
+        return new ProductResource($product);
     }
 
     /**
      * Display the specified resource.
      *
      * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | ProductResource
      */
     public function show($id)
     {
@@ -54,27 +56,26 @@ class ProductController extends Controller
         return new ProductResource($product);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Product $product)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\UpdateProductRequest  $request
-     * @param  \App\Models\Product  $product
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateProductRequest $request, Product $product)
+    public function update(UpdateProductRequest $request, $id)
     {
-        //
+        $product = Product::find($id);
+        if($product === null)
+        {
+            return response([
+                'message'=>trans('data.null_entity'),
+            ], 422);
+        }
+
+        $product->update($request->all());
+        return new ProductResource($product);
     }
 
     /**
