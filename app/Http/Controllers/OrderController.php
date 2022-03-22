@@ -39,14 +39,13 @@ class OrderController extends Controller
         $order = Order::create($order);
 
         $products = $request->input('products');
-        $newProducts = [];
-        foreach ($products as $product)
+
+        foreach ($products as &$product)
         {
             $product['order_id'] = $order->id;
-            $newProducts[] = $product;
         }
 
-        $order->products()->createMany($newProducts);
+        $order->products()->createMany($products);
 
         return new ProductResource($order->load('products'));
     }
