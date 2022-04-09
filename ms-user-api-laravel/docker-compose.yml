@@ -3,7 +3,7 @@ services:
   users:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: docker/Dockerfile
     environment:
       DB_HOST: users_db
       DB_DATABASE: users
