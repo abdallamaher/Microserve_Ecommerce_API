@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: email-laravel
+spec:
+  type: NodePort
+  selector:
+    run: email-laravel
+  ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 31000

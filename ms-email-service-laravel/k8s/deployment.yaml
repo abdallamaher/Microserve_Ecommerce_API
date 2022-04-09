@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: email-laravel
+spec:
+  selector:
+    matchLabels:
+      run: email-laravel
+  template:
+    metadata:
+      labels:
+        run: email-laravel
+    spec:
+      containers:
+        - name: demo
+          image: <username>/email-laravel
+          ports:
+            - containerPort: 80
+          env:
+            - name: APP_KEY
+              value: base64:cUPmwHx4LXa4Z25HhzFiWCf7TlQmSqnt98pnuiHmzgY=

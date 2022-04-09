@@ -1,0 +1,9 @@
+version: '3.8'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: email-laravel
+    ports:
+      - '80:80'
